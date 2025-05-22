@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Precio del Dólar Hoy</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      color: #111827;
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 {
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+    }
+    .card {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 1.5rem;
+      margin: 1rem auto;
+      max-width: 400px;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .flag {
+      font-size: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Precio del Dólar Hoy</h1>
+  <div class="card" id="clp"><span class="flag">🇨🇱</span> <span>CLP: Cargando...</span></div>
+  <div class="card" id="pen"><span class="flag">🇵🇪</span> <span>PEN: Cargando...</span></div>
+  <div class="card" id="brl"><span class="flag">🇧🇷</span> <span>BRL: Cargando...</span></div>
+
+  <script>
+    fetch("https://api.exchangerate.host/latest?base=USD")
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("clp").innerHTML = `<span class="flag">🇨🇱</span> <span>CLP: ${data.rates.CLP.toFixed(2)}</span>`;
+        document.getElementById("pen").innerHTML = `<span class="flag">🇵🇪</span> <span>PEN: ${data.rates.PEN.toFixed(2)}</span>`;
+        document.getElementById("brl").innerHTML = `<span class="flag">🇧🇷</span> <span>BRL: ${data.rates.BRL.toFixed(2)}</span>`;
+      })
+      .catch(err => {
+        document.getElementById("clp").innerHTML = `Error cargando CLP`;
+        document.getElementById("pen").innerHTML = `Error cargando PEN`;
+        document.getElementById("brl").innerHTML = `Error cargando BRL`;
+      });
+  </script>
+</body>
+</html>
